@@ -52,7 +52,9 @@ def download_video(url: str, download_dir: Path, download_subs: bool = False):
         "--cookies-from-browser",
         "firefox",
         "--retries",
-        "999999",
+        "10",
+        "--progress",
+        "--console-title",
         # "--write-subs", "--write-auto-subs", "--sub-langs", "en", "--embed-subs",
     ]
 
