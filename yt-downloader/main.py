@@ -76,6 +76,7 @@ def download_video(url: str, download_dir: Path, download_subs: bool = False):
     log_message = f"Running: {' '.join(cmd)}"
     print("\n" + log_message + "\n")
     logging.info(log_message)
+    logging.info(f"Initiating download with up to 10 retries for: {url}")
 
     try:
         subprocess.run(cmd, check=True)
@@ -84,6 +85,7 @@ def download_video(url: str, download_dir: Path, download_subs: bool = False):
         error_message = f"Download failed for {url}: {e}"
         print(error_message)
         logging.error(error_message)
+        logging.error(f"All retries exhausted for: {url}")
 
 
 if __name__ == "__main__":

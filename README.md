@@ -6,7 +6,7 @@ A simple command-line tool to download YouTube videos and playlists using [yt-dl
 
 - Download single videos or full playlists
 - Automatically selects 1080p max resolution
-- Optionally add subtitles
+- Optionally download and embed subtitles
 - Saves files in organized folders
 - Uses your Firefox cookies for auth (e.g. to download private/watch-later videos)
 
@@ -51,4 +51,4 @@ Paste video URL(s), comma-separated (or 'q' to quit): https://www.youtube.com/wa
 2.	✅ ~~Toggle subtitle download via CLI arg~~
 3.	Batch input from file
 4.	Post-download metadata viewer
-5.	Retry logic / progress bar
+5.	✅ ~~Retry logic / progress bar~~
