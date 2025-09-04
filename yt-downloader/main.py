@@ -1,0 +1,55 @@
+import os
+import subprocess
+from pathlib import Path
+
+
+def main():
+    DOWNLOAD_DIR = Path("/media/admin/legion2/yt")
+    DOWNLOAD_DIR.mkdir(parents=True, exist_ok=True)
+
+    print("YouTube Downloader\n----------------------")
+
+    while True:
+        url_input = input(
+            "Paste video URL(s), comma-separated (or 'q' to quit): "
+        ).strip()
+        if url_input.lower() == "q":
+            break
+        if not url_input:
+            continue
+
+        urls = [u.strip() for u in url_input.split(",") if u.strip()]
+
+        for url in urls:
+            download_video(url, DOWNLOAD_DIR)
+
+
+def download_video(url: str, download_dir: Path):
+    # Base yt-dlp command
+    cmd = [
+        "yt-dlp",
+        "-f",
+        "bv*[height<=1080]+ba/b[height<=1080]",
+        "--cookies-from-browser",
+        "firefox",
+        "--retries",
+        "999999",
+        # "--write-subs", "--write-auto-subs", "--sub-langs", "en", "--embed-subs",
+    ]
+
+    if "playlist" in url.lower():
+        output_template = download_dir / "%(playlist_title)s" / "%(title)s.%(ext)s"
+        cmd += ["-o", str(output_template), url]
+    else:
+        cmd += ["-P", str(download_dir), url]
+
+    print("\nRunning:", " ".join(cmd), "\n")
+
+    try:
+        subprocess.run(cmd, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Download failed for {url}: {e}")
+
+
+if __name__ == "__main__":
+    main()
