@@ -36,12 +36,10 @@ A simple command-line tool to download YouTube videos and playlists using [yt-dl
 ## Usage
 
 ```bash
-python yt_downloader/main.py
+python yt_downloader/main.py [--subs]
 ```
 
-Paste one or more YouTube URLs when prompted. Type `q` to quit.
-
-## Example
+Use the `--subs` flag to download subtitles (auto-generated if available). Subtitles will be embedded into the video file.
 
 ```bash
 Paste video URL(s), comma-separated (or 'q' to quit): https://www.youtube.com/watch?v=abc123, https://youtube.com/playlist?list=XYZ
@@ -50,7 +48,7 @@ Paste video URL(s), comma-separated (or 'q' to quit): https://www.youtube.com/wa
 ## TODO
 
 1.	✅ ~~Logging to a file (yt_downloader.log)~~
-2.	Toggle subtitle download via CLI arg or input prompt
+2.	✅ ~~Toggle subtitle download via CLI arg~~
 3.	Batch input from file
 4.	Post-download metadata viewer
 5.	Retry logic / progress bar
