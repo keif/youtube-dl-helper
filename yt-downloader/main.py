@@ -1,3 +1,4 @@
+import argparse
 import logging
 import os
 import subprocess
@@ -13,6 +14,14 @@ logging.basicConfig(
 
 
 def main():
+    parser = argparse.ArgumentParser(
+        description="Download YouTube videos or playlists using yt-dlp."
+    )
+    parser.add_argument(
+        "--subs", action="store_true", help="Download subtitles if available"
+    )
+    args = parser.parse_args()
+
     DOWNLOAD_DIR = Path.home() / "Downloads" / "yt_downloads"
     DOWNLOAD_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -31,10 +40,10 @@ def main():
         urls = [u.strip() for u in url_input.split(",") if u.strip()]
 
         for url in urls:
-            download_video(url, DOWNLOAD_DIR)
+            download_video(url, DOWNLOAD_DIR, download_subs=args.subs)
 
 
-def download_video(url: str, download_dir: Path):
+def download_video(url: str, download_dir: Path, download_subs: bool = False):
     # Base yt-dlp command
     cmd = [
         "yt-dlp",
@@ -46,6 +55,15 @@ def download_video(url: str, download_dir: Path):
         "999999",
         # "--write-subs", "--write-auto-subs", "--sub-langs", "en", "--embed-subs",
     ]
+
+    if download_subs:
+        cmd += [
+            "--write-subs",
+            "--write-auto-subs",
+            "--sub-langs",
+            "en",
+            "--embed-subs",
+        ]
 
     if "playlist" in url.lower():
         output_template = download_dir / "%(playlist_title)s" / "%(title)s.%(ext)s"
