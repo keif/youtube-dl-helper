@@ -1,10 +1,19 @@
+import logging
 import os
 import subprocess
 from pathlib import Path
 
+# Setup logging
+LOG_FILE = "yt_downloader.log"
+logging.basicConfig(
+    filename=LOG_FILE,
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+)
+
 
 def main():
-    DOWNLOAD_DIR = Path("/media/admin/legion2/yt")
+    DOWNLOAD_DIR = Path.home() / "Downloads" / "yt_downloads"
     DOWNLOAD_DIR.mkdir(parents=True, exist_ok=True)
 
     print("YouTube Downloader\n----------------------")
@@ -14,6 +23,7 @@ def main():
             "Paste video URL(s), comma-separated (or 'q' to quit): "
         ).strip()
         if url_input.lower() == "q":
+            logging.info("User exited the downloader.")
             break
         if not url_input:
             continue
@@ -43,12 +53,17 @@ def download_video(url: str, download_dir: Path):
     else:
         cmd += ["-P", str(download_dir), url]
 
-    print("\nRunning:", " ".join(cmd), "\n")
+    log_message = f"Running: {' '.join(cmd)}"
+    print("\n" + log_message + "\n")
+    logging.info(log_message)
 
     try:
         subprocess.run(cmd, check=True)
+        logging.info(f"Successfully downloaded: {url}")
     except subprocess.CalledProcessError as e:
-        print(f"Download failed for {url}: {e}")
+        error_message = f"Download failed for {url}: {e}"
+        print(error_message)
+        logging.error(error_message)
 
 
 if __name__ == "__main__":

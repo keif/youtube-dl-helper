@@ -46,3 +46,11 @@ Paste one or more YouTube URLs when prompted. Type `q` to quit.
 ```bash
 Paste video URL(s), comma-separated (or 'q' to quit): https://www.youtube.com/watch?v=abc123, https://youtube.com/playlist?list=XYZ
 ```
+
+## TODO
+
+1.	✅ ~~Logging to a file (yt_downloader.log)~~
+2.	Toggle subtitle download via CLI arg or input prompt
+3.	Batch input from file
+4.	Post-download metadata viewer
+5.	Retry logic / progress bar
